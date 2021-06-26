@@ -1,26 +1,30 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 
-export const AccordionElement = ( { ...props } ): JSX.Element => {
-
-  const { title, description } = props.value;
-  const [ isPanelVisible, setIsPanelVisible ] = useState<boolean>( false )
-
-  const accordionHandler = (): void => {
-    setIsPanelVisible( state => !state )
-  }
-
-
-  let descriptionResult = isPanelVisible &&
-    (
-      <div className="panel">
-        <p>{ description }</p>
-      </div>
-    )
-
-  return (
-    <>
-      <button className="accordion" onClick={ accordionHandler }>{ title }</button>
-      { descriptionResult }
-    </>
-  )
+export interface AccordionElementProps {
+	title: string,
+	description: string
 }
+
+export const AccordionElement: FC<AccordionElementProps> = ( props ) => {
+	
+	const {title, description} = props;
+	const [ isPanelVisible, setIsPanelVisible ] = useState<boolean>( false );
+	
+	const accordionHandler = (): void => {
+		setIsPanelVisible( state => !state );
+	};
+	
+	
+	return (
+		<>
+			<button className="accordion" onClick={ accordionHandler }>{ title }</button>
+			{ isPanelVisible &&
+			(
+				<div className="panel">
+					<p>{ description }</p>
+				</div>
+			)
+			}
+		</>
+	);
+};
